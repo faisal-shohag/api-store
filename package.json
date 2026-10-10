@@ -4,6 +4,8 @@
   "type": "module",
   "scripts": {
     "dev": "wrangler dev",
+    "gen": "node scripts/gen-data.mjs",
+    "typecheck": "npm run gen && tsc --noEmit",
     "deploy": "npm run deploy:old && npm run deploy:new",
     "deploy:old": "wrangler deploy --minify -e old",
     "deploy:new": "wrangler deploy --minify -e new",

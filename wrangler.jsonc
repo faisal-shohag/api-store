@@ -10,14 +10,26 @@
   },
   // Files in ./public served directly by Cloudflare: free, unlimited, no Worker CPU.
   "assets": { "directory": "./public" },
-  // Rate-limit quota for /api/* (per client IP, fixed window). Override with
-  // `wrangler secret put` or per-environment vars as needed.
+  // Rate-limit quota for /api/* (per client IP, fixed window). Used by `wrangler dev`.
+  // Vars are not inherited by environments, so each env repeats them below.
   "vars": { "RATE_LIMIT_MAX": "100", "RATE_LIMIT_WINDOW_MS": "60000" },
   // Multi-account deploys: `npm run deploy:old` / `deploy:new` / `deploy:third`.
-  // Worker name is pinned so both accounts serve it as `api`.
+  // Worker name is pinned so every account serves it as `api`.
   "env": {
-    "old": { "name": "api", "account_id": "72e3f88a0e204b78f712ca2a3e919629" },
-    "new": { "name": "api", "account_id": "a2a53e3b4aae2dc762eb476813dbcb08" },
-    "third": { "name": "api", "account_id": "8c52df2fdc80dac7fb89c67da7b551f5" }
+    "old": {
+      "name": "api",
+      "account_id": "72e3f88a0e204b78f712ca2a3e919629",
+      "vars": { "RATE_LIMIT_MAX": "100", "RATE_LIMIT_WINDOW_MS": "60000" }
+    },
+    "new": {
+      "name": "api",
+      "account_id": "a2a53e3b4aae2dc762eb476813dbcb08",
+      "vars": { "RATE_LIMIT_MAX": "100", "RATE_LIMIT_WINDOW_MS": "60000" }
+    },
+    "third": {
+      "name": "api",
+      "account_id": "8c52df2fdc80dac7fb89c67da7b551f5",
+      "vars": { "RATE_LIMIT_MAX": "100", "RATE_LIMIT_WINDOW_MS": "60000" }
+    }
   }
 }
